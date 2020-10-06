@@ -1,0 +1,27 @@
+2020-06-27 07:46:28 pid:1 Error: Undefined class constant 'MYSQL_ATTR_INIT_COMMAND' in D:\wwwroot\fast\workerman\GatewayWorker\Applications\YourApp\Connection.php:1714
+Stack trace:
+#0 D:\wwwroot\fast\workerman\GatewayWorker\Applications\YourApp\Connection.php(1702): Workerman\MySQL\Connection->connect()
+#1 D:\wwwroot\fast\workerman\GatewayWorker\Applications\YourApp\Events.php(47): Workerman\MySQL\Connection->__construct('39.98.158.225', 3306, 'fast', 'NGkEzaHC5Zmhcti...', 'fast')
+#2 [internal function]: Events::onWorkerStart(Object(GatewayWorker\BusinessWorker))
+#3 D:\wwwroot\fast\workerman\GatewayWorker\vendor\workerman\gateway-worker\src\BusinessWorker.php(223): call_user_func('Events::onWorke...', Object(GatewayWorker\BusinessWorker))
+#4 D:\wwwroot\fast\workerman\GatewayWorker\vendor\workerman\workerman\Worker.php(2393): GatewayWorker\BusinessWorker->onWorkerStart(Object(GatewayWorker\BusinessWorker))
+#5 D:\wwwroot\fast\workerman\GatewayWorker\vendor\workerman\gateway-worker\src\BusinessWorker.php(197): Workerman\Worker->run()
+#6 D:\wwwroot\fast\workerman\GatewayWorker\vendor\workerman\workerman\Worker.php(1404): GatewayWorker\BusinessWorker->run()
+#7 D:\wwwroot\fast\workerman\GatewayWorker\vendor\workerman\workerman\Worker.php(1347): Workerman\Worker::forkWorkersForWindows()
+#8 D:\wwwroot\fast\workerman\GatewayWorker\vendor\workerman\workerman\Worker.php(546): Workerman\Worker::forkWorkers()
+#9 D:\wwwroot\fast\workerman\GatewayWorker\Applications\YourApp\start_businessworker.php(35): Workerman\Worker::runAll()
+#10 {main}
+2020-06-27 07:46:30 pid:1 Worker process terminated
+2020-06-27 07:46:31 pid:1 Error: Undefined class constant 'MYSQL_ATTR_INIT_COMMAND' in D:\wwwroot\fast\workerman\GatewayWorker\Applications\YourApp\Connection.php:1714
+Stack trace:
+#0 D:\wwwroot\fast\workerman\GatewayWorker\Applications\YourApp\Connection.php(1702): Workerman\MySQL\Connection->connect()
+#1 D:\wwwroot\fast\workerman\GatewayWorker\Applications\YourApp\Events.php(47): Workerman\MySQL\Connection->__construct('39.98.158.225', 3306, 'fast', 'NGkEzaHC5Zmhcti...', 'fast')
+#2 [internal function]: Events::onWorkerStart(Object(GatewayWorker\BusinessWorker))
+#3 D:\wwwroot\fast\workerman\GatewayWorker\vendor\workerman\gateway-worker\src\BusinessWorker.php(223): call_user_func('Events::onWorke...', Object(GatewayWorker\BusinessWorker))
+#4 D:\wwwroot\fast\workerman\GatewayWorker\vendor\workerman\workerman\Worker.php(2393): GatewayWorker\BusinessWorker->onWorkerStart(Object(GatewayWorker\BusinessWorker))
+#5 D:\wwwroot\fast\workerman\GatewayWorker\vendor\workerman\gateway-worker\src\BusinessWorker.php(197): Workerman\Worker->run()
+#6 D:\wwwroot\fast\workerman\GatewayWorker\vendor\workerman\workerman\Worker.php(1404): GatewayWorker\BusinessWorker->run()
+#7 D:\wwwroot\fast\workerman\GatewayWorker\vendor\workerman\workerman\Worker.php(1347): Workerman\Worker::forkWorkersForWindows()
+#8 D:\wwwroot\fast\workerman\GatewayWorker\vendor\workerman\workerman\Worker.php(546): Workerman\Worker::forkWorkers()
+#9 D:\wwwroot\fast\workerman\GatewayWorker\Applications\YourApp\start_businessworker.php(35): Workerman\Worker::runAll()
+#10 {main}
