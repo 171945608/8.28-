@@ -1,0 +1,340 @@
+<style type="text/css">
+    .sm-st {
+        background: #fff;
+        padding: 20px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        margin-bottom: 20px;
+        -webkit-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 1px 0px rgba(0, 0, 0, 0.05);
+    }
+
+    .sm-st-icon {
+        width: 60px;
+        height: 60px;
+        display: inline-block;
+        line-height: 60px;
+        text-align: center;
+        font-size: 30px;
+        background: #eee;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        float: left;
+        margin-right: 10px;
+        color: #fff;
+    }
+
+    .sm-st-info {
+        font-size: 12px;
+        padding-top: 2px;
+    }
+
+    .sm-st-info span {
+        display: block;
+        font-size: 24px;
+        font-weight: 600;
+    }
+
+    .orange {
+        background: #fa8564 !important;
+    }
+
+    .tar {
+        background: #45cf95 !important;
+    }
+
+    .sm-st .green {
+        background: #86ba41 !important;
+    }
+
+    .pink {
+        background: #AC75F0 !important;
+    }
+
+    .yellow-b {
+        background: #fdd752 !important;
+    }
+
+    .stat-elem {
+
+        background-color: #fff;
+        padding: 18px;
+        border-radius: 40px;
+
+    }
+
+    .stat-info {
+        text-align: center;
+        background-color: #fff;
+        border-radius: 5px;
+        margin-top: -5px;
+        padding: 8px;
+        -webkit-box-shadow: 0 1px 0px rgba(0, 0, 0, 0.05);
+        box-shadow: 0 1px 0px rgba(0, 0, 0, 0.05);
+        font-style: italic;
+    }
+
+    .stat-icon {
+        text-align: center;
+        margin-bottom: 5px;
+    }
+
+    .st-red {
+        background-color: #F05050;
+    }
+
+    .st-green {
+        background-color: #27C24C;
+    }
+
+    .st-violet {
+        background-color: #7266ba;
+    }
+
+    .st-blue {
+        background-color: #23b7e5;
+    }
+
+    .stats .stat-icon {
+        color: #28bb9c;
+        display: inline-block;
+        font-size: 26px;
+        text-align: center;
+        vertical-align: middle;
+        width: 50px;
+        float: left;
+    }
+
+    .stat {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .stat .value {
+        font-size: 20px;
+        line-height: 24px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-weight: 500;
+    }
+
+    .stat .name {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .stat.lg .value {
+        font-size: 26px;
+        line-height: 28px;
+    }
+
+    .stat.lg .name {
+        font-size: 16px;
+    }
+
+    .stat-col .progress {
+        height: 2px;
+    }
+
+    .stat-col .progress-bar {
+        line-height: 2px;
+        height: 2px;
+    }
+
+    .item {
+        padding: 30px 0;
+    }
+</style>
+<div class="panel panel-default panel-intro">
+    <div class="panel-heading">
+        {:build_heading(null, false)}
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#one" data-toggle="tab">{:__('统计数据')}</a></li>
+            <li><a href="#two" data-toggle="tab">{:__('七日注册')}</a></li>
+        </ul>
+    </div>
+    <div class="panel-body">
+        <div id="myTabContent" class="tab-content">
+            <div class="tab-pane fade active in" id="one">
+
+                <div class="row">
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="sm-st clearfix">
+                            <span class="sm-st-icon st-red"><i class="fa fa-users"></i></span>
+                            <div class="sm-st-info">
+                                <span>{$totalUser}</span>
+                                {:__('总用户数')}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="sm-st clearfix">
+                            <span class="sm-st-icon st-violet"><i class="fa fa-book"></i></span>
+                            <div class="sm-st-info">
+                                <span>{$totalMember}</span>
+                                {:__('总会员数')}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="sm-st clearfix">
+                            <span class="sm-st-icon st-blue"><i class="fa fa-shopping-bag"></i></span>
+                            <div class="sm-st-info">
+                                <span>{$totalVip}</span>
+                                {:__('总VIP数')}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-xs-6">
+                        <div class="sm-st clearfix">
+                            <span class="sm-st-icon st-green"><i class="fa fa-cny"></i></span>
+                            <div class="sm-st-info">
+                                <span>{$totalStore}</span>
+                                {:__('总店铺数')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top:15px;">
+                    <div class="col-lg-12"></div>
+                    <div class="col-xs-6 col-md-3">
+                        <div class="panel bg-blue">
+                            <div class="panel-body">
+                                <div class="panel-title">
+                                    <span class="label label-success pull-right">{:__('Real time')}</span>
+                                    <h5>{:__('店铺商品统计')}</h5>
+                                </div>
+                                <div class="panel-content">
+                                    <h1 class="no-margins">{$goodsCount}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-md-3">
+                        <div class="panel bg-aqua-gradient">
+                            <div class="panel-body">
+                                <div class="ibox-title">
+                                    <span class="label label-info pull-right">{:__('Real time')}</span>
+                                    <h5>{:__('团购商品统计')}</h5>
+                                </div>
+                                <div class="ibox-content">
+                                    <h1 class="no-margins">{$groupbuyGoodsCount}</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-md-3">
+                        <div class="panel bg-purple-gradient">
+                            <div class="panel-body">
+                                <div class="ibox-title">
+                                    <span class="label label-primary pull-right">{:__('Real time')}</span>
+                                    <h5>{:__('特价商品统计')}</h5>
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="ibox-content">
+                                        <h1 class="no-margins">{$discountGoodsCount}</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-6 col-md-3">
+                        <div class="panel bg-purple-gradient">
+                            <div class="panel-body">
+                                <div class="ibox-title">
+                                    <span class="label label-primary pull-right">{:__('Real time')}</span>
+                                    <h5>{:__('VIP商品统计')}</h5>
+                                </div>
+                                <div class="ibox-content">
+                                    <div class="ibox-content">
+                                        <h1 class="no-margins">{$vipGoodsCount}</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="tab-pane fade" id="two">
+                <div class="row">
+                    <div class="row" style="margin-top:0px;">
+                        <div class="col-xs-12 col-md-12">
+                            <div id="graph" style="width:800px;height:400px;"></div>
+                        </div>
+                        <div class="col-xs-12 col-md-12">
+                            <div id="pie" style="width:800px;height:400px;"></div>
+                        </div>
+                        <div class="col-xs-12 col-md-12">
+                            <div id="bar" style="width:800px;height:400px;"></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.bootcdn.net/ajax/libs/echarts/4.8.0/echarts-en.common.js"></script>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+    var myChart1 = echarts.init(document.getElementById('graph'));
+
+    // 指定图表的配置项和数据
+    var option = {
+        title: {
+            // text: '用户注册七日统计'
+        },
+        tooltip: {},
+        xAxis: {
+            data: [{$date}]
+        },
+        yAxis: {},
+        series: [{
+            name: '注册人数',
+            type: 'line',
+            data: [{$stat}]
+        }]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    myChart1.setOption(option);
+</script>
+<script type="text/javascript">
+    var myChart2 = echarts.init(document.getElementById('pie'));
+    var option = {
+        tooltip: {
+            formatter: '{a} <br/>{b} : {d}%'
+        },
+        series: [{
+            name: '注册人数',
+            type: 'pie',
+            data: {$pieData},
+        }]
+    };
+    myChart2.setOption(option);
+</script>
+<script type="text/javascript">
+    var myChart3 = echarts.init(document.getElementById('bar'));
+    var option = {
+        tooltip: {},
+        xAxis: {
+            data: [{$date}]
+        },
+        yAxis: {},
+        series: [{
+            name: '注册人数',
+            type: 'bar',
+            data: [{$stat}]
+        }]
+    };
+    myChart3.setOption(option);
+</script>

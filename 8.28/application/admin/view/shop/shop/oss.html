@@ -1,0 +1,39 @@
+<form id="add-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+    <input type="hidden" name="row[id]" value="{$row.id}" />
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('权限ID')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-access_key_id" data-rule="required" class="form-control" name="row[access_key_id]" type="text" value="{$row.access_key_id|htmlentities}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('权限密码')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-access_key_secret" data-rule="required" class="form-control" name="row[access_key_secret]" type="text" value="{$row.access_key_secret|htmlentities}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('存储区域')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-bucket" data-rule="required" class="form-control" name="row[bucket]" type="text" value="{$row.bucket|htmlentities}">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('存储节点')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-endpoint" data-rule="required" class="form-control" name="row[endpoint]" type="text" value="{$row.endpoint|htmlentities}">
+        </div>
+    </div>
+
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

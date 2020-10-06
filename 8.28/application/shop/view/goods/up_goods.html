@@ -1,0 +1,315 @@
+{extend name="common/frame" /}
+
+{block name="cont"}
+<style>
+    .layui-table-cell {
+        height: auto;
+    }
+</style>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <table class="layui-hide" id="table" lay-filter="table"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="imageTpl">
+    <img src="{{d.image}}" style="width:40px;" />
+</script>
+<script type="text/html" id="switchTpl">
+    <input type="checkbox" name="state" value="{{d.id}}" lay-skin="switch" lay-text="上架|下架"
+           {{d.state== 1 ? 'checked' : ''}}>
+</script>
+<script type="text/html" id="storeHomeTpl">
+    <input type="checkbox" name="store_home" value="{{d.id}}" lay-skin="switch" lay-text="首页|"
+           {{d.store_home== 1 ? 'checked' : ''}}>
+</script>
+<script type="text/html" id="newTpl">
+    <input type="checkbox" name="new" value="{{d.id}}" lay-skin="switch" lay-text="新品|"
+           {{d.new== 1 ? 'checked' : ''}}>
+</script>
+<script type="text/html" id="hotTpl">
+    <input type="checkbox" name="hot" value="{{d.id}}" lay-skin="switch" lay-text="热销|"
+           {{d.hot== 1 ? 'checked' : ''}}>
+</script>
+<script type="text/html" id="specialTpl">
+    <input type="checkbox" name="special" value="{{d.id}}" lay-skin="switch" lay-text="特供|"
+           {{d.special== 1 ? 'checked' : ''}}>
+</script>
+<script type="text/html" id="discountTpl">
+    <input type="checkbox" name="discount" value="{{d.id}}" lay-skin="switch" lay-text="优惠|"
+           {{d.discount== 1 ? 'checked' : ''}}>
+</script>
+<script type="text/html" id="toolBarTpl">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-danger" lay-event="del">删除</button>
+        <button class="layui-btn" lay-event="add">新增</button>
+        <button class="layui-btn layui-btn-normal" lay-event="refresh"> <i class="layui-icon">&#xe9aa;</i></button>
+    </div>
+</script>
+<script type="text/html" id="barTpl">
+    <a class="layui-btn layui-btn-xs layui-btn-normal" lay-event="link">链接</a>
+    <!--<a class="layui-btn layui-btn-xs" lay-event="groupbuy">团购</a>-->
+    <a class="layui-btn layui-btn-xs" lay-event="discount">特价</a>
+    <a class="layui-btn layui-btn-xs" lay-event="vip">VIP</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <!--<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del">删除</a>-->
+</script>
+<script>
+    layui.use(['table', 'layer'], function () {
+        var table = layui.table;
+        var layer = layui.layer;
+
+        //执行渲染
+        var tableIns = table.render({
+            elem: '#table'
+            , url: "{:url()}"
+            , method: "post"
+            , page: true
+            , toolbar: '#toolBarTpl'
+            , cols: [[
+                {type: 'checkbox'}
+                , {field: 'id', title: 'ID', width: 100, align: 'center'}
+                , {field: 'image', title: '图片', templet: '#imageTpl', width: 100, align: 'center'}
+                , {field: 'name', title: '名称', width: 150}
+                , {field: 'cate_name', title: '分类', width: 150}
+                , {field: 'group_names', title: '分组', width: 250}
+                , {field: 'price', title: '单价', width: 100, align: 'center'}
+                , {field: 'oprice', title: '原价', width: 100, align: 'center'}
+                , {field: 'delivery', title: '发货时长（日）', width: 150, align: 'center'}
+                // , {field: 'quotations', title: '报价件数', width: 100, align: 'center'}
+                , {field: 'store_home', title: '首页', templet: '#storeHomeTpl', event: "switchStoreHome", width: 100, align: 'center'}
+                , {field: 'new', title: '新品', templet: '#newTpl', event: "switchNew", width: 100, align: 'center'}
+                , {field: 'hot', title: '热销', templet: '#hotTpl', event: "switchHot", width: 100, align: 'center'}
+                , {field: 'special', title: '特供', templet: '#specialTpl', event: "switchSpecial", width: 100, align: 'center'}
+                , {field: 'discount', title: '优惠', templet: '#discountTpl', event: "switchDiscount", width: 100, align: 'center'}
+                , {field: 'state', title: '状态', templet: '#switchTpl', event: "switchState", width: 100, align: 'center'}
+                , {title: '操作', width: 280, align: 'center', toolbar: '#barTpl'}
+            ]]
+        });
+
+        //头部工具栏
+        table.on('toolbar(table)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'del':
+                    var data = checkStatus.data;
+                    var arr = [];
+                    if (data.length > 0) {
+                        for (var i = 0; i < data.length; i++) {
+                            arr.push(data[i].id);
+                        }
+                    }
+
+                    if (arr.length <= 0) {
+                        layer.msg("请选择操作数据");
+                        return false;
+                    }
+
+                    layer.confirm('请确认操作', function (index) {
+                        $.ajax({
+                            type: "post",
+                            url: "{:url('deleteGoods')}",
+                            data: {ids: arr.join(',')},
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.code == 1) {
+                                    //parent.location.reload(true);//刷新父级页面
+                                    tableIns.reload();
+                                    layer.close(index);
+                                } else {
+                                    layer.msg(data.msg);
+                                }
+                            }
+                        });
+                    });
+                    break;
+
+                case 'add':
+                    var url = "{:url('addGoods')}";
+                    xadmin.open('新增', url);
+                    break;
+
+                case 'refresh':
+                    window.location.reload(true);
+                    break;
+            }
+        });
+
+        //监听工具条
+        table.on('tool(table)', function (obj) {
+            var data = obj.data;
+            switch (obj.event) {
+                case 'link':
+                    var link = "type=goods&id=" + data.id;
+                    var transfer = document.createElement('input');
+                    document.body.appendChild(transfer);
+                    transfer.value = link;  // 这里表示想要复制的内容
+                    transfer.focus();
+                    transfer.select();
+                    if (document.execCommand('copy')) {
+                        document.execCommand('copy');
+                    }
+                    transfer.blur();
+                    document.body.removeChild(transfer);
+
+                    layer.alert("链接地址：" + link + "，已复制到剪切板。");
+                    break;
+
+                case 'groupbuy':
+                    var url = "{:url('groupbuy')}" + '?id=' + data.id;
+                    xadmin.open('团购', url);
+                    break;
+
+                case 'discount':
+                    var url = "{:url('discount')}" + '?id=' + data.id;
+                    xadmin.open('特价', url);
+                    break;
+
+                case 'vip':
+                    var url = "{:url('vip')}" + '?id=' + data.id;
+                    xadmin.open('vip', url);
+                    break;
+
+                case 'edit':
+                    var url = "{:url('editGoods')}" + '?id=' + data.id;
+                    xadmin.open('编辑', url);
+                    break;
+
+                case 'del':
+                    layer.confirm('请确认操作', function (index) {
+                        $.ajax({
+                            type: "post",
+                            url: "{:url('deleteGoods')}",
+                            data: {ids: data.id},
+                            dataType: "json",
+                            success: function (data) {
+                                if (data.code == 1) {
+                                    //parent.location.reload(true);//刷新父级页面
+                                    tableIns.reload();
+                                    layer.close(index);
+                                } else {
+                                    layer.msg(data.msg);
+                                }
+                            }
+                        });
+                    });
+                    break;
+
+                case 'switchState':
+                    $.ajax({
+                        type: "post",
+                        url: "{:url('switchState')}",
+                        data: {id: data.id},
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.code == 1) {
+                                //parent.location.reload(true);//刷新父级页面
+                                tableIns.reload();
+                                layer.close(index);
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                        }
+                    });
+                    break;
+
+                case 'switchStoreHome':
+                    $.ajax({
+                        type: "post",
+                        url: "{:url('switchStoreHome')}",
+                        data: {id: data.id},
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.code == 1) {
+                                //parent.location.reload(true);//刷新父级页面
+                                tableIns.reload();
+                                layer.close(index);
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                        }
+                    });
+                    break;
+
+                case 'switchNew':
+                    $.ajax({
+                        type: "post",
+                        url: "{:url('switchNew')}",
+                        data: {id: data.id},
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.code == 1) {
+                                //parent.location.reload(true);//刷新父级页面
+                                tableIns.reload();
+                                layer.close(index);
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                        }
+                    });
+                    break;
+
+                case 'switchHot':
+                    $.ajax({
+                        type: "post",
+                        url: "{:url('switchHot')}",
+                        data: {id: data.id},
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.code == 1) {
+                                //parent.location.reload(true);//刷新父级页面
+                                tableIns.reload();
+                                layer.close(index);
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                        }
+                    });
+                    break;
+
+                case 'switchSpecial':
+                    $.ajax({
+                        type: "post",
+                        url: "{:url('switchSpecial')}",
+                        data: {id: data.id},
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.code == 1) {
+                                //parent.location.reload(true);//刷新父级页面
+                                tableIns.reload();
+                                layer.close(index);
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                        }
+                    });
+                    break;
+
+                case 'switchDiscount':
+                    $.ajax({
+                        type: "post",
+                        url: "{:url('switchDiscount')}",
+                        data: {id: data.id},
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.code == 1) {
+                                //parent.location.reload(true);//刷新父级页面
+                                tableIns.reload();
+                                layer.close(index);
+                            } else {
+                                layer.msg(data.msg);
+                            }
+                        }
+                    });
+                    break;
+            }
+        });
+    });
+</script>
+
+{/block}

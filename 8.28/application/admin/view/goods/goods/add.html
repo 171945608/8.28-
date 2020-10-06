@@ -1,0 +1,158 @@
+<form id="add-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Name')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-name" class="form-control" name="row[name]" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Image')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-image" class="form-control" size="50" name="row[image]" type="text">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="plupload-image" class="btn btn-danger plupload" data-input-id="c-image" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-image"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                    <span><button type="button" id="fachoose-image" class="btn btn-primary fachoose" data-input-id="c-image" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
+                </div>
+                <span class="msg-box n-right" for="c-image"></span>
+            </div>
+            <ul class="row list-inline plupload-preview" id="p-image"></ul>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Images')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-images" class="form-control" size="50" name="row[images]" type="text">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="plupload-images" class="btn btn-danger plupload" data-input-id="c-images" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="true" data-preview-id="p-images"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                    <span><button type="button" id="fachoose-images" class="btn btn-primary fachoose" data-input-id="c-images" data-mimetype="image/*" data-multiple="true"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
+                </div>
+                <span class="msg-box n-right" for="c-images"></span>
+            </div>
+            <ul class="row list-inline plupload-preview" id="p-images"></ul>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Video')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-video" class="form-control" name="row[video]" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Cate_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-cate_id" data-rule="required" data-source="cate/index" class="form-control selectpage" name="row[cate_id]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Cate_name')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-cate_name" class="form-control" name="row[cate_name]" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Group_ids')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-group_ids" data-rule="required" data-source="group/index" data-multiple="true" class="form-control selectpage" name="row[group_ids]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Price')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-price" class="form-control" step="0.01" name="row[price]" type="number">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Oprice')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-oprice" class="form-control" step="0.01" name="row[oprice]" type="number">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Detail')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-detail" class="form-control " rows="5" name="row[detail]" cols="50"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Equities')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <textarea id="c-equities" class="form-control " rows="5" name="row[equities]" cols="50"></textarea>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Delivery')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-delivery" class="form-control" name="row[delivery]" type="number">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Quotations')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-quotations" class="form-control" name="row[quotations]" type="number">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('New')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-new" data-rule="required" class="form-control" name="row[new]" type="number" value="0">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Hot')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-hot" data-rule="required" class="form-control" name="row[hot]" type="number" value="0">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Special')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-special" data-rule="required" class="form-control" name="row[special]" type="number" value="0">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Audit')}:</label>
+        <div class="col-xs-12 col-sm-8">
+                        
+            <select  id="c-audit" data-rule="required" class="form-control selectpicker" name="row[audit]">
+                {foreach name="auditList" item="vo"}
+                    <option value="{$key}" {in name="key" value="1"}selected{/in}>{$vo}</option>
+                {/foreach}
+            </select>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Audit_msg')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-audit_msg" class="form-control" name="row[audit_msg]" type="text">
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('State')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            
+            <div class="radio">
+            {foreach name="stateList" item="vo"}
+            <label for="row[state]-{$key}"><input id="row[state]-{$key}" name="row[state]" type="radio" value="{$key}" {in name="key" value="1"}checked{/in} /> {$vo}</label> 
+            {/foreach}
+            </div>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Store_id')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-store_id" data-rule="required" data-source="store/index" class="form-control selectpage" name="row[store_id]" type="text" value="">
+        </div>
+    </div>
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

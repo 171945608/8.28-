@@ -1,0 +1,233 @@
+{extend name="common/frame" /}
+
+{block name="cont"}
+<style>
+    .layui-upload-img {
+        width: 130px;
+    }
+</style>
+<div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <form class="layui-form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red"></span>店铺名称 </label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="name" lay-verify="required" autocomplete="off" class="layui-input"
+                                   value="{$store.name}" />
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red"></span>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red"></span>联系电话 </label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="phone" lay-verify="required" autocomplete="off" class="layui-input"
+                                   value="{$store.phone}" />
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red"></span>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red"></span>店铺LOGO </label>
+                        <div class="layui-input-inline">
+                            <input type="hidden" name="logo" lay-verify="required" value="{$store.logo}" />
+                            <div class="layui-upload">
+                                <button type="button" class="layui-btn" id="logoUpload">上传图片</button>
+                                <div class="layui-upload-list">
+                                    <img class="layui-upload-img" id="logoPreview" src="{$store.logo}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red"></span>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red"></span>资质文件 </label>
+                        <div class="layui-input-inline">
+                            <input type="hidden" name="qualification" lay-verify="required"
+                                   value="{$store.qualification}" />
+                            <div class="layui-upload">
+                                <button type="button" class="layui-btn" id="qualificationUpload">上传图片</button>
+                                <div class="layui-upload-list">
+                                    <img class="layui-upload-img" id="qualificationPreview"
+                                         src="{$store.qualification}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red"></span>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red"></span>店铺封面 </label>
+                        <div class="layui-input-inline">
+                            <input type="hidden" name="image" lay-verify="required" value="{$store.image}" />
+                            <div class="layui-upload">
+                                <button type="button" class="layui-btn" id="imageUpload">上传图片</button>
+                                <div class="layui-upload-list">
+                                    <img class="layui-upload-img" id="imagePreview" src="{$store.image}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red"></span>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red"></span>店铺驻地 </label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="area" lay-verify="required" autocomplete="off" class="layui-input"
+                                   value="{$store.area}" />
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red"></span>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red"></span>店铺地址 </label>
+                        <div class="layui-input-inline">
+                            <textarea name="address" lay-verify="required" autocomplete="off" class="layui-textarea">{$store.address}</textarea>
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red"></span>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red"></span>销售品牌 </label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="brand" lay-verify="required" autocomplete="off" class="layui-input"
+                                   value="{$store.brand}" />
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red"></span>
+                        </div>
+                    </div>
+
+                    <!--<div class="layui-form-item">-->
+                        <!--<label class="layui-form-label"> <span class="x-red"></span>主营业务 </label>-->
+                        <!--<div class="layui-input-inline">-->
+                            <!--<textarea name="business" lay-verify="required" autocomplete="off" class="layui-textarea">{$store.business}</textarea>-->
+                        <!--</div>-->
+                        <!--<div class="layui-form-mid layui-word-aux">-->
+                            <!--<span class="x-red"></span>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <div class="layui-form-item">
+                    <label class="layui-form-label"> <span class="x-red"></span>店铺标签 </label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="tag" lay-verify="required" autocomplete="off" class="layui-input"
+                               value="{$store.tag}" />
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                    <span class="x-red"></span>
+                    </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red"></span></label>
+                        <button class="layui-btn layui-btn-normal" lay-filter="edit" lay-submit="">提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['form', 'layer', 'upload'], function () {
+        var $ = layui.jquery;
+        var form = layui.form;
+        var layer = layui.layer;
+        var upload = layui.upload;
+
+        //普通图片上传
+        upload.render({
+            elem: '#logoUpload'
+            , url: "{:url('base/aliyunUpload')}"
+            , before: function (obj) {
+                obj.preview(function (index, file, result) {
+                    $('#logoPreview').attr('src', result);
+                });
+            }
+            , done: function (res) {
+                if (res.code == 1) {
+                    $("[name=logo]").val(res.data.url);
+                }
+            }
+        });
+
+        upload.render({
+            elem: '#qualificationUpload'
+            , url: "{:url('base/aliyunUpload')}"
+            , before: function (obj) {
+                obj.preview(function (index, file, result) {
+                    $('#qualificationPreview').attr('src', result);
+                });
+            }
+            , done: function (res) {
+                if (res.code == 1) {
+                    $("[name=qualification]").val(res.data.url);
+                }
+            }
+        });
+
+        upload.render({
+            elem: '#imageUpload'
+            , url: "{:url('base/aliyunUpload')}"
+            , before: function (obj) {
+                obj.preview(function (index, file, result) {
+                    $('#imagePreview').attr('src', result);
+                });
+            }
+            , done: function (res) {
+                if (res.code == 1) {
+                    $("[name=image]").val(res.data.url);
+                }
+            }
+        });
+
+        //监听提交
+        form.on('submit(edit)', function (data) {
+            $.ajax({
+                type: "post",
+                url: "{:url()}",
+                data: data.field,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 1) {
+                        layer.msg(data.msg, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg(data.msg);
+                    }
+                }
+            });
+            return false;
+        });
+
+        //提示修改密码
+        $.ajax({
+            url: "{:url('store/getLoginTimes')}",
+            type: "post",
+            success: function (res) {
+                if (res.code == 1 && res.data.loginTimes == 0) {
+                    layer.msg('为保护您的账号安全，请尽快修改登录密码');
+                }
+            }
+        });
+    });
+</script>
+{/block}

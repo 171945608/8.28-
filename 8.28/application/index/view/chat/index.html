@@ -1,0 +1,178 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>ChatClient</title>
+    <script type="text/JavaScript">
+        // tips: WebSocket 调试脚本
+        var WebSocket = WebSocket || window.WebSocket || window.MozWebSocket;
+        if (!WebSocket) {
+            alert("WebSocket not supported by this browser!");
+        } else {
+            var g_ws = null;
+
+            var log = function (s) {
+                if (document.readyState !== "complete") {
+                    log.buffer.push(s);
+                } else {
+                    document.getElementById("contentId").value += (s + "\n");
+                }
+            };
+
+            var heart = 0;
+
+            function CreateConnect() {
+                console.log("CreateConnect()");
+                if (g_ws == null) {
+                    try {
+                        g_ws = new WebSocket(document.getElementById("wsUrlId").value);
+
+                        g_ws.onmessage = function (event) {
+                            var obj = JSON.parse(event.data);
+                            console.log(event.data);
+                            log("msg: " + obj.msg_cont);
+                        };
+
+                        g_ws.onclose = function (event) {
+                            log("Socket 关闭!");
+                            g_ws = null;
+                        };
+
+                        g_ws.onopen = function (event) {
+                            BindUid();
+                            log("Socket 开启!");
+
+                            setInterval(function () {
+                                heartShake();
+                                heart++;
+                                console.log('heart:', heart);
+                            }, 1000 * 30);
+                        };
+                        g_ws.onerror = function (event) {
+                            console.log(event);
+                            log("Socket 错误!");
+                        };
+                    } catch (e) {
+                        g_ws = null;
+                        log("创建连接失败");
+                    }
+                }
+            }
+
+            function getFromId() {
+                return document.getElementById("fromId").value;
+            }
+
+            function BindUid() {
+                var obj = {
+                    op: 'bind',
+                    from_id: getFromId()
+                };
+                g_ws.send(JSON.stringify(obj));
+            }
+
+            function heartShake() {
+                var obj = {
+                    op: 'heart',
+                };
+                g_ws.send(JSON.stringify(obj));
+            }
+
+            function getSendType() {
+                return document.getElementById("sendType").value;
+            }
+
+            function getMsgCont() {
+                return document.getElementById("msgCont").value;
+            }
+
+            function getToId() {
+                return document.getElementById("toId").value;
+            }
+
+            function getRoomId() {
+                return document.getElementById("roomId").value;
+            }
+
+            function SendMsg() {
+                var obj = {
+                    op: 'send',
+                    from_id: getFromId(),
+                    send_type: getSendType(),
+                    msg_type: 1,
+                    msg_cont: getMsgCont(),
+                    to_id: getToId(),
+                    room_id: getRoomId(),
+                };
+                g_ws.send(JSON.stringify(obj));
+            }
+
+            function getTs() {
+                return (new Date()).getTime();
+            }
+
+            function AutoSendMsg() {
+                console.log("AutoSendMsg()");
+                var obj = {
+                    op: 'send',
+                    from_id: getFromId(),
+                    send_type: getSendType(),
+                    msg_type: 1,
+                    msg_cont: getMsgCont(),
+                    to_id: getToId(),
+                    room_id: getRoomId(),
+                };
+                MetaSend(100, JSON.stringify(obj));
+            }
+
+            function MetaSend(times, msg) {
+                if (times <= 0) {
+                    return;
+                }
+                console.log("AutoSendMsg()，times: ", times);
+                g_ws.send(msg);
+                MetaSend(times - 1, msg);
+            }
+
+            function CloseConnect() {
+                console.log("CloseConnect()");
+                if (g_ws != null) {
+                    g_ws.close();
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+<textarea style="width: 100%;height: 300px;" cols="50" id="contentId"></textarea>
+<br />
+<span style="display:inline-block;text-align:right;font-size: 14px;width: 100px;">server:</span>
+<input name="" id="wsUrlId" value="ws://121.196.51.88:9600" />
+<br />
+<span style="display:inline-block;text-align:right;font-size: 14px;width: 100px;">from_id:</span>
+<input name="" id="fromId" value="10" />
+<br />
+<span style="display:inline-block;text-align:right;font-size: 14px;width: 100px;"></span>
+<button onClick="javascript:CreateConnect()">Create</button>
+<button onClick="javascript:CloseConnect()">Close</button>
+<br />
+<span style="display:inline-block;text-align:right;font-size: 14px;width: 100px;">send_type:</span>
+<input name="" id="sendType" value="1" />
+<br />
+<span style="display:inline-block;text-align:right;font-size: 14px;width: 100px;">msg_cont:</span>
+<input name="" id="msgCont" value="Hello, World!" />
+<br />
+<span style="display:inline-block;text-align:right;font-size: 14px;width: 100px;">to_id:</span>
+<input name="" id="toId" value="20" />
+<br />
+<span style="display:inline-block;text-align:right;font-size: 14px;width: 100px;">room_id:</span>
+<input name="to" id="roomId" value="3" />
+<br />
+<span style="display:inline-block;text-align:right;font-size: 14px;width: 100px;"></span>
+<button onClick="javascript:SendMsg()">Send</button>
+<button onClick="javascript:AutoSendMsg()">AutoSend</button>
+</body>
+</html>

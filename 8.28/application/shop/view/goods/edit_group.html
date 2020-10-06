@@ -1,0 +1,129 @@
+{extend name="common/frame" /}
+
+{block name="cont"}
+<style>
+    .layui-upload-img {
+        width: 130px;
+    }
+</style>
+<div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <form class="layui-form" lay-filter="form">
+                    <input type="hidden" name="id" lay-verify="required" />
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red"></span>名称 </label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="name" lay-verify="required" autocomplete="off" class="layui-input" />
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red"></span>
+                        </div>
+                    </div>
+
+                    <!--<div class="layui-form-item">-->
+                        <!--<label class="layui-form-label"> <span class="x-red"></span>图片 </label>-->
+                        <!--<div class="layui-input-inline">-->
+                            <!--<input type="hidden" name="image" lay-verify="required" />-->
+                            <!--<div class="layui-upload">-->
+                                <!--<button type="button" class="layui-btn" id="imageUpload">上传图片</button>-->
+                                <!--<div class="layui-upload-list">-->
+                                    <!--<img class="layui-upload-img" id="imagePreview">-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="layui-form-mid layui-word-aux">-->
+                            <!--<span class="x-red"></span>-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red"></span>排序 </label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="weigh" lay-verify="required" autocomplete="off" class="layui-input" value="0" />
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red"></span>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red"></span>状态 </label>
+                        <div class="layui-input-inline">
+                            <input type="checkbox" name="status" lay-skin="switch" lay-text="启用|禁用">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red"></span>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red"></span></label>
+                        <button class="layui-btn layui-btn-normal" lay-filter="edit" lay-submit="">提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['form', 'layer', 'upload'], function () {
+        $ = layui.jquery;
+        var form = layui.form;
+        var layer = layui.layer;
+        var upload = layui.upload;
+
+        //表单赋值
+        var obj = {
+            "id": "{$info.id}"
+            , "name": "{$info.name}"
+            // , "image": "{$info.image}"
+            , "weigh": "{$info.weigh}"
+        };
+        var status = "{$info.status}";
+        obj["status"] = status == 1 ? true : false;
+        form.val("form", obj);
+        // //图片赋值
+        // $("[name=image]").siblings(".layui-upload").find(".layui-upload-img").attr("src", "{$info.image}");
+
+        // //普通图片上传
+        // upload.render({
+        //     elem: '#imageUpload'
+        //     , url: "{:url('base/aliyunUpload')}"
+        //     , before: function (obj) {
+        //         obj.preview(function (index, file, result) {
+        //             $('#imagePreview').attr('src', result);
+        //         });
+        //     }
+        //     , done: function (res) {
+        //         if (res.code == 1) {
+        //             $("[name=image]").val(res.data.url);
+        //         }
+        //     }
+        // });
+
+
+        //监听提交
+        form.on('submit(edit)', function (data) {
+            $.ajax({
+                type: "post",
+                url: "{:url()}",
+                data: data.field,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 1) {
+                        parent.location.reload(true);//刷新父级页面
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                    } else {
+                        layer.msg(data.msg);
+                    }
+                }
+            });
+            return false;
+        });
+    });
+</script>
+{/block}

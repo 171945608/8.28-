@@ -1,0 +1,26 @@
+<form id="add-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+    <input type="hidden" name="row[id]" value="{$id}" />
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('审核')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="radio">
+                <label for="row[vip_auth]-0">
+                    <input id="row[vip_auth]-0" name="row[vip_auth]" type="radio" value="0" checked />审核驳回
+                </label>
+                <label for="row[vip_auth]-2">
+                    <input id="row[vip_auth]-2" name="row[vip_auth]" type="radio" value="2" />审核通过
+                </label>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

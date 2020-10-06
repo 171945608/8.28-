@@ -1,0 +1,89 @@
+{extend name="common/frame" /}
+
+{block name="cont"}
+<style>
+    .layui-upload-img {
+        width: 130px;
+    }
+</style>
+<div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <form class="layui-form" lay-filter="form">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red"></span>内容 </label>
+                        <div class="layui-input-block">
+                            <div id="content">{$info.about}</div>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red"></span></label>
+                        <button class="layui-btn layui-btn-normal" lay-filter="edit" lay-submit="">提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="__SHOP__/lib/wang/wangEditor.min.js"></script>
+<script type="text/javascript">
+    var E = window.wangEditor;
+    var editor = new E('#content');
+    editor.customConfig.menus = [
+        'head',  // 标题
+        'bold',  // 粗体
+        'fontSize',  // 字号
+        'fontName',  // 字体
+        'italic',  // 斜体
+        'underline',  // 下划线
+        'strikeThrough',  // 删除线
+        'foreColor',  // 文字颜色
+        'backColor',  // 背景颜色
+        'list',  // 列表
+        'justify',  // 对齐方式
+        'quote',  // 引用
+        'image',  // 插入图片
+        'table',  // 表格
+        'undo',  // 撤销
+        'redo'  // 重复
+    ];
+    editor.customConfig.uploadImgServer = "{:url('base/editorUpload')}";
+    editor.customConfig.uploadImgMaxSize = 2 * 1024 * 1024;
+    editor.customConfig.uploadImgMaxLength = 1;
+    editor.customConfig.uploadFileName = 'file';
+    editor.create();
+</script>
+
+<script>
+    layui.use(['form', 'layer', 'upload'], function () {
+        $ = layui.jquery;
+        var form = layui.form;
+        var layer = layui.layer;
+        var upload = layui.upload;
+
+        //监听提交
+        form.on('submit(edit)', function (data) {
+            data.field.about = editor.txt.html();
+            $.ajax({
+                type: "post",
+                url: "{:url()}",
+                data: data.field,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 1) {
+                        layer.msg(data.msg, function () {
+                            window.location.reload();
+                        });
+                    } else {
+                        layer.msg(data.msg);
+                    }
+                }
+            });
+            return false;
+        });
+    });
+</script>
+{/block}

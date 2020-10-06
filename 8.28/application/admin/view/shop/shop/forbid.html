@@ -1,0 +1,32 @@
+<form id="add-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+    <input type="hidden" name="row[id]" value="{$id}" />
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('封禁类型')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="radio">
+                <label for="row[forbid_type]-1">
+                    <input id="row[forbid_type]-1" name="row[forbid_type]" type="radio" value="1" checked />3天
+                </label>
+                <label for="row[forbid_type]-2">
+                    <input id="row[forbid_type]-2" name="row[forbid_type]" type="radio" value="2" />7天
+                </label>
+                <label for="row[forbid_type]-3">
+                    <input id="row[forbid_type]-3" name="row[forbid_type]" type="radio" value="3" />1个月
+                </label>
+                <label for="row[forbid_type]-4">
+                    <input id="row[forbid_type]-4" name="row[forbid_type]" type="radio" value="4" />永久
+                </label>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>

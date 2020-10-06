@@ -1,0 +1,29 @@
+<form id="edit-form" class="form-horizontal" role="form" data-toggle="validator" method="POST" action="">
+    <input id="c-ids" class="form-control" name="row[ids]" type="hidden" value="{$row.id|htmlentities}">
+    <input id="c-goods_id" class="form-control" name="row[goods_id]" type="hidden" value="">
+
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('选择商品')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="form-inline" data-toggle="cxselect" data-selects="store,goods">
+                <select class="store form-control" name="store" data-url="groupbuy/groupbuy/getStores"></select>
+                <select class="goods form-control" name="goods" data-url="groupbuy/groupbuy/getGoods"
+                        data-query-name="store_id"></select>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group layer-footer">
+        <label class="control-label col-xs-12 col-sm-2"></label>
+        <div class="col-xs-12 col-sm-8">
+            <button type="submit" class="btn btn-success btn-embossed disabled">{:__('OK')}</button>
+            <button type="reset" class="btn btn-default btn-embossed">{:__('Reset')}</button>
+        </div>
+    </div>
+</form>
+<script>
+    document.getElementsByName('goods')[0].addEventListener('change', function (e) {
+        var goods_id = this.options[this.selectedIndex].value;
+        document.getElementById('c-goods_id').setAttribute('value', goods_id);
+    }, false);
+</script>

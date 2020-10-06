@@ -1,0 +1,349 @@
+{extend name="common/frame" /}
+
+{block name="cont"}
+<style>
+    .layui-upload-img {
+        width: 130px;
+    }
+</style>
+<div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <form class="layui-form">
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red">*</span>名称 </label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="name" lay-verify="required" autocomplete="off"
+                                   class="layui-input" />
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red"></span>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red">*</span>配图 </label>
+                        <div class="layui-input-inline">
+                            <input type="hidden" name="image" lay-verify="required" />
+                            <div class="layui-upload">
+                                <button type="button" class="layui-btn" id="imageUpload">上传图片</button>
+                                <div class="layui-upload-list">
+                                    <img class="layui-upload-img" id="imagePreview">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red"></span>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red">*</span>轮播图 </label>
+                        <div class="layui-input-block">
+                            <input type="hidden" name="images" lay-verify="required" />
+                            <div class="layui-upload">
+                                <button type="button" class="layui-btn layui-btn-normal" id="imagesSelect">选择多文件
+                                </button>
+                                <div class="layui-upload-list" id="imagesPreview">
+                                    <table class="layui-table">
+                                        <thead>
+                                        <tr>
+                                            <th>文件名</th>
+                                            <th>大小</th>
+                                            <th>状态</th>
+                                            <th>操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody id="imagesList"></tbody>
+                                    </table>
+                                </div>
+                                <button type="button" class="layui-btn" id="imagesUpload">开始上传</button>
+                            </div>
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red"></span>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red">*</span>视频 </label>
+                        <div class="layui-input-inline">
+                            <input type="hidden" name="video" lay-verify="required" />
+                            <div class="layui-upload">
+                                <button type="button" class="layui-btn" id="videoUpload"><i class="layui-icon"></i>上传视频</button>
+                            </div>
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red"></span>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red">*</span>分类 </label>
+                        <div class="layui-input-inline">
+                            <select name="cate_id" lay-verify="required">
+                                <option value=""></option>
+                                {foreach $cates as $cate}
+                                <option value="{$cate.id}">{$cate.name}</option>
+                                {/foreach}
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red"></span>分组 </label>
+                        <div class="layui-input-block">
+                            {foreach $groups as $group}
+                            <input type="checkbox" lay-skin="primary" name="group_ids[{$group.id}]" title="{$group.name}">
+                            {/foreach}
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red">*</span>单价 </label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="price" lay-verify="required" autocomplete="off" class="layui-input"
+                                   value="0.00" />
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red"></span>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red">*</span>原价 </label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="oprice" lay-verify="required" autocomplete="off" class="layui-input"
+                                   value="0.00" />
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red"></span>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red">*</span>详情 </label>
+                        <div class="layui-input-block">
+                            <div id="detail"></div>
+                        </div>
+                    </div>
+
+                    <!--<div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red">*</span>权益说明 </label>
+                        <div class="layui-input-block">
+                            <div id="equities"></div>
+                        </div>
+                    </div>-->
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red">*</span>发货时长（日） </label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="delivery" lay-verify="required" autocomplete="off" class="layui-input"
+                                   value="0" />
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red"></span>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red">*</span>状态 </label>
+                        <div class="layui-input-block">
+                            <input type="checkbox" name="state" lay-skin="switch" lay-text="上架|下架" checked>
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red"></span>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red"></span></label>
+                        <button class="layui-btn layui-btn-normal" lay-filter="add" lay-submit="">提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="__SHOP__/lib/wang/wangEditor.min.js"></script>
+<script type="text/javascript">
+    var E = window.wangEditor;
+    var editor_d = new E('#detail');
+    editor_d.customConfig.menus = [
+        'head',  // 标题
+        'bold',  // 粗体
+        'fontSize',  // 字号
+        'fontName',  // 字体
+        'italic',  // 斜体
+        'underline',  // 下划线
+        'strikeThrough',  // 删除线
+        'foreColor',  // 文字颜色
+        'backColor',  // 背景颜色
+        'list',  // 列表
+        'justify',  // 对齐方式
+        'quote',  // 引用
+        'image',  // 插入图片
+        'table',  // 表格
+        'undo',  // 撤销
+        'redo'  // 重复
+    ];
+    editor_d.customConfig.uploadImgServer = "{:url('base/editorUpload')}";
+    editor_d.customConfig.uploadImgMaxSize = 2 * 1024 * 1024;
+    editor_d.customConfig.uploadImgMaxLength = 1;
+    editor_d.customConfig.uploadFileName = 'file';
+    editor_d.create();
+
+    // var editor_e = new E('#equities');
+    // editor_e.customConfig.menus = [
+    //     'head',  // 标题
+    //     'bold',  // 粗体
+    //     'fontSize',  // 字号
+    //     'fontName',  // 字体
+    //     'italic',  // 斜体
+    //     'underline',  // 下划线
+    //     'strikeThrough',  // 删除线
+    //     'foreColor',  // 文字颜色
+    //     'backColor',  // 背景颜色
+    //     'list',  // 列表
+    //     'justify',  // 对齐方式
+    //     'quote',  // 引用
+    //     'image',  // 插入图片
+    //     'table',  // 表格
+    //     'undo',  // 撤销
+    //     'redo'  // 重复
+    // ];
+    // editor_e.customConfig.uploadImgServer = "{:url('base/editorUpload')}";
+    // editor_e.customConfig.uploadImgMaxSize = 2 * 1024 * 1024;
+    // editor_e.customConfig.uploadImgMaxLength = 1;
+    // editor_e.customConfig.uploadFileName = 'file';
+    // editor_e.create();
+</script>
+<script>
+    layui.use(['form', 'layer', 'upload'], function () {
+        var $ = layui.jquery;
+        var form = layui.form;
+        var layer = layui.layer;
+        var upload = layui.upload;
+
+        //普通图片上传
+        upload.render({
+            elem: '#imageUpload'
+            , url: "{:url('base/aliyunUpload')}"
+            , before: function (obj) {
+                obj.preview(function (index, file, result) {
+                    $('#imagePreview').attr('src', result);
+                });
+            }
+            , done: function (res) {
+                if (res.code == 1) {
+                    $("[name=image]").val(res.data.url);
+                }
+            }
+        });
+
+        //视频上传
+        upload.render({
+            elem: '#videoUpload'
+            ,url: "{:url('base/aliyunUpload')}" //改成您自己的上传接口
+            ,accept: 'video' //视频
+            ,done: function(res){
+                if (res.code == 1) {
+                    layer.msg('上传成功');
+                    $("[name=video]").val(res.data.url);
+                }
+            }
+        });
+
+        //多文件列表示例
+        var imagesList = $('#imagesList');
+        var uploadListIns = upload.render({
+            elem: '#imagesSelect'
+            , url: "{:url('base/aliyunUpload')}"
+            , accept: 'file'
+            , multiple: true
+            , auto: false
+            , bindAction: '#imagesUpload'
+            , choose: function (obj) {
+                $("#imagesPreview").find(".layui-upload-img").remove();
+
+                var files = this.files = obj.pushFile();
+                obj.preview(function (index, file, result) {
+                    var tr = $(['<tr id="upload-' + index + '">'
+                        , '<td>' + file.name + '</td>'
+                        , '<td>' + (file.size / 1024).toFixed(1) + 'kb</td>'
+                        , '<td>等待上传</td>'
+                        , '<td>'
+                        , '<button class="layui-btn layui-btn-xs demo-reload layui-hide">重传</button>'
+                        , '<button class="layui-btn layui-btn-xs layui-btn-danger demo-delete">删除</button>'
+                        , '</td>'
+                        , '</tr>'].join(''));
+
+                    //单个重传
+                    tr.find('.demo-reload').on('click', function () {
+                        obj.upload(index, file);
+                    });
+
+                    //删除
+                    tr.find('.demo-delete').on('click', function () {
+                        delete files[index];
+                        tr.remove();
+                        uploadListIns.config.elem.next()[0].value = '';
+                    });
+
+                    imagesList.append(tr);
+                });
+            }
+            , done: function (res, index, upload) {
+                if (res.code == 1) { //上传成功
+                    var tr = imagesList.find('tr#upload-' + index)
+                        , tds = tr.children();
+                    tr.attr('bind-url', res.data.url);
+                    tds.eq(2).html('<span style="color: #5FB878;">上传成功</span>');
+                    tds.eq(3).html(''); //清空操作
+
+                    var urls = [];
+                    imagesList.find('tr').each(function (i, e) {
+                        var url = $(e).attr('bind-url');
+                        url && urls.push(url);
+                    });
+                    $("[name=images]").val(urls.join(','));
+
+                    return delete this.files[index]; //删除文件队列已经上传成功的文件
+                }
+                this.error(index, upload);
+            }
+            , error: function (index, upload) {
+                var tr = imagesList.find('tr#upload-' + index)
+                    , tds = tr.children();
+                tds.eq(2).html('<span style="color: #FF5722;">上传失败</span>');
+                tds.eq(3).find('.demo-reload').removeClass('layui-hide'); //显示重传
+            }
+        });
+
+        //监听提交
+        form.on('submit(add)', function (data) {
+            data.field.detail = editor_d.txt.html();
+            //data.field.equities = editor_e.txt.html();
+            $.ajax({
+                type: "post",
+                url: "{:url()}",
+                data: data.field,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 1) {
+                        parent.location.reload(true);//刷新父级页面
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                    } else {
+                        layer.msg(data.msg);
+                    }
+                }
+            });
+            return false;
+        });
+    });
+</script>
+{/block}

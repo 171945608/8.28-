@@ -1,0 +1,84 @@
+{extend name="common/frame" /}
+
+{block name="cont"}
+<style>
+    .layui-upload-img {
+        width: 130px;
+    }
+</style>
+<div class="layui-fluid">
+    <div class="layui-row">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <form class="layui-form" lay-filter="form">
+                    <input type="hidden" name="id" lay-verify="required" />
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red"></span>VIP分类 </label>
+                        <div class="layui-input-inline">
+                            <select name="vip_cate_id" lay-verify="required">
+                                <option value=""></option>
+                                {foreach vip_cate_list as $vip_cate}
+                                <option value="{$vip_cate.id}">{$vip_cate.name}</option>
+                                {/foreach}
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red"></span>VIP价格 </label>
+                        <div class="layui-input-inline">
+                            <input type="text" name="vip_price" lay-verify="required" autocomplete="off"
+                                   class="layui-input" />
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <span class="x-red"></span>
+                        </div>
+                    </div>
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"> <span class="x-red"></span></label>
+                        <button class="layui-btn layui-btn-normal" lay-filter="edit" lay-submit="">提交</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['form', 'layer', 'upload'], function () {
+        var $ = layui.jquery;
+        var form = layui.form;
+        var layer = layui.layer;
+        var upload = layui.upload;
+
+        //表单赋值
+        var obj = {
+            "id": "{$info.id}"
+        };
+        form.val("form", obj);
+
+        //监听提交
+        form.on('submit(edit)', function (data) {
+            $.ajax({
+                type: "post",
+                url: "{:url()}",
+                data: data.field,
+                dataType: "json",
+                success: function (data) {
+                    if (data.code == 1) {
+                        parent.location.reload(true);//刷新父级页面
+                        var index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                    } else {
+                        layer.msg(data.msg);
+                    }
+                }
+            });
+            return false;
+        });
+    });
+</script>
+{/block}
